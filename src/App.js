@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Book } from './Book'
 import { BookPreview } from './BookPreview'
 import './App.css'
+import spin from './spin.svg'
 const LIMIT = 9
 
 class App extends Component {
@@ -11,7 +12,8 @@ class App extends Component {
     book: {},
     bookPreview: false,
     showSearch: true,
-    showReadingList: false
+    showReadingList: false,
+    isLoading: false,
   }
 
   handleInputChange = ({ target }) => {
@@ -23,11 +25,13 @@ class App extends Component {
   }
 
   handleSearch = e => {
+    
     if (e.keyCode === 13) {
+      this.setState({isLoading: true})
       fetch(`http://openlibrary.org/search.json?q=${this.state.search.replace(/ /g, '+')}&limit=${LIMIT}`)
         .then(resp => resp.json())
         .then(json => {
-          this.setState({ list: json.docs, bookPreview: false, book: {} })
+          this.setState({ list: json.docs, bookPreview: false, book: {}, isLoading: false })
         })
     }
   }
@@ -54,7 +58,7 @@ class App extends Component {
   }
 
   render() {
-    const { list, bookPreview, book, showReadingList, showSearch } = this.state
+    const { list, bookPreview, book, showReadingList, showSearch, isLoading } = this.state
     let books = []
     if (showSearch) {
       books = list.map((book, i) => {
@@ -84,6 +88,7 @@ class App extends Component {
               onChange={this.handleInputChange}
               placeholder="Search books..."
             />
+            {isLoading ? <img src={spin} className="loading" alt="loading" /> : null}
             {list.length > 0 && !bookPreview ? (
               <div className="books">
                 <div className="seach-results">

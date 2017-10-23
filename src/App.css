@@ -147,6 +147,18 @@ button {
   font-family: 'Crimson Text', 'sans-serif';
 }
 
+.loading {
+  animation: loading infinite 5s linear;
+  height: 60px;
+  padding: 20px;
+}
+
+@keyframes loading {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+//styling
 ::-webkit-input-placeholder {
   /* WebKit, Blink, Edge */
   color: rgba(255, 255, 255, 0.8);
@@ -154,12 +166,10 @@ button {
 :-moz-placeholder {
   /* Mozilla Firefox 4 to 18 */
   color: rgba(255, 255, 255, 0.8);
-  opacity: 1;
 }
 ::-moz-placeholder {
   /* Mozilla Firefox 19+ */
   color: rgba(255, 255, 255, 0.8);
-  opacity: 1;
 }
 :-ms-input-placeholder {
   /* Internet Explorer 10-11 */
@@ -176,7 +186,6 @@ button {
 :-moz-placeholder:focus {
   /* Mozilla Firefox 4 to 18 */
   color: rgba(255, 255, 255, 0.8);
-  opacity: 1;
 }
 ::-moz-placeholder:focus {
   /* Mozilla Firefox 19+ */
