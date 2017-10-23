@@ -14,24 +14,24 @@ export class Book extends Component {
   }
 
   render() {
-    const { title, author_name, inReadingList, addOrRemoveFromReadingList, index} = this.props
+    const { title, author_name, inReadingList, addOrRemoveFromReadingList, index } = this.props
     const { mouseIn } = this.state
     return (
-      <div style={{position: 'relative'}} onMouseEnter={this.handleMouseEnter} onMouseLeave={this.handleMouseLeave}>
-      <div className="book" onClick={() => this.props.onClick(this.props)} >
-        <div className="book-row">
-          <p className="book-label">title</p>
-          <p className="book-value">{title}</p>
+      <div style={{ position: 'relative' }} onMouseEnter={this.handleMouseEnter} onMouseLeave={this.handleMouseLeave}>
+        <div className="book" onClick={() => this.props.onClick(this.props)}>
+          <div className="book-row">
+            <p className="book-label">title</p>
+            <p className="book-value">{title}</p>
+          </div>
+          <div className="book-row">
+            <p className="book-label">author</p>
+            <p className="book-value">{author_name}</p>
+          </div>
         </div>
-        <div className="book-row">
-          <p className="book-label">author</p>
-          <p className="book-value">{author_name}</p>
-        </div>
-      </div>
-      {mouseIn ? (
+        {mouseIn ? (
           <div
             className="add-to-list"
-            onClick={e => {
+            onClick={() => {
               addOrRemoveFromReadingList(index)
             }}
           >

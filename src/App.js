@@ -9,7 +9,9 @@ class App extends Component {
     search: 'lord of the rings',
     list: [],
     book: {},
-    bookPreview: false
+    bookPreview: false,
+    showSearch: true,
+    showReadingList: false
   }
 
   handleInputChange = ({ target }) => {
@@ -34,42 +36,75 @@ class App extends Component {
     this.setState({ bookPreview: true, book: book })
   }
 
-  addOrRemoveFromReadingList = (i) => {
-
-    let newList = this.state.list;
-    newList[i].inReadingList = newList[i].inReadingList ? !newList[i].inReadingList : true;
-    this.setState({list: newList})
-    if(this.state.bookPreview && this.state.book.index === i) {
-      this.setState({book: newList[i]})
+  addOrRemoveFromReadingList = i => {
+    let newList = Array.of(...this.state.list)
+    newList[i].inReadingList = newList[i].inReadingList ? !newList[i].inReadingList : true
+    this.setState({ list: newList })
+    if (this.state.bookPreview && this.state.book.index === i) {
+      this.setState({ book: newList[i] })
     }
   }
 
+  showSearch = () => {
+    this.setState({ showSearch: true, showReadingList: false })
+  }
+
+  showReadingList = () => {
+    this.setState({ showSearch: false, showReadingList: true })
+  }
+
   render() {
-    const { list, bookPreview, book } = this.state
-    let books = list.map((book, i) => {
-      book.index = i
-      return <Book {...book} key={book.key} onClick={this.handleBookPreview} addOrRemoveFromReadingList={this.addOrRemoveFromReadingList} />
-    })
+    const { list, bookPreview, book, showReadingList, showSearch } = this.state
+    let books = []
+    if (showSearch) {
+      books = list.map((book, i) => {
+        book.index = i
+        return <Book {...book} key={book.key} onClick={this.handleBookPreview} addOrRemoveFromReadingList={this.addOrRemoveFromReadingList} />
+      })
+    } else {
+      books = list.filter(book => book.inReadingList === true).map((book, i) => {
+        return <Book {...book} key={book.key} onClick={this.handleBookPreview} addOrRemoveFromReadingList={this.addOrRemoveFromReadingList} />
+      })
+    }
+
     return (
       <div className="app">
-        <input
-          className="search"
-          defaultValue="lord of the rings"
-          type="text"
-          onKeyUp={this.handleSearch}
-          value={this.state.value}
-          onChange={this.handleInputChange}
-          placeholder="Search books..."
-        />
-        {list.length > 0 && !bookPreview ? (
-          <div className="books">
-            <div className="seach-results">
-              <p>SEARCH RESULTS</p>
-            </div>
-            {books}
+        <div className="buttons">
+          <button onClick={this.showReadingList}>Show Reading List</button>
+          <button onClick={this.showSearch}>Show Search</button>
+        </div>
+        {showSearch ? (
+          <div className="app">
+            <input
+              className="search"
+              defaultValue="lord of the rings"
+              type="text"
+              onKeyUp={this.handleSearch}
+              value={this.state.value}
+              onChange={this.handleInputChange}
+              placeholder="Search books..."
+            />
+            {list.length > 0 && !bookPreview ? (
+              <div className="books">
+                <div className="seach-results">
+                  <p>search results</p>
+                </div>
+                {books}
+              </div>
+            ) : null}
+            {bookPreview ? <BookPreview {...book} addOrRemoveFromReadingList={this.addOrRemoveFromReadingList} /> : null}
           </div>
         ) : null}
-        {bookPreview ? <BookPreview {...book} addOrRemoveFromReadingList={this.addOrRemoveFromReadingList}/> : null}
+        {showReadingList ? (
+          <div className="app" style={{ justifyContent: 'flex-start' }}>
+            <div className="books">
+              <div className="seach-results" style={{ alignSelf: 'flex-start' }}>
+                <p>My reading list</p>
+              </div>
+              {books}
+            </div>
+          </div>
+        ) : null}
       </div>
     )
   }

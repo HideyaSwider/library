@@ -15,9 +15,6 @@ export class BookPreview extends Component {
       addOrRemoveFromReadingList,
       index
     } = this.props
-    console.log("============================================")
-    console.log(inReadingList)
-    console.log("============================================")
     return (
       <div className="book-preview">
         <div className="book-title">
@@ -63,7 +60,7 @@ export class BookPreview extends Component {
         <div className="add-to-list-panel">
           <div className="add-to-list" onClick={() => addOrRemoveFromReadingList(index)}>
             {inReadingList ? '- remove from reading list' : '+ add to reading list'}
-          </div>{' '}
+          </div>
         </div>
       </div>
     )

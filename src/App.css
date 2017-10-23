@@ -14,6 +14,7 @@
   align-items: center;
   overflow-y: scroll;
 }
+
 .search {
   padding: 20px;
   font-size: 30pt;
@@ -42,6 +43,7 @@
   border-bottom: 2px solid #fff;
   text-align: left;
   font-size: 50px;
+  text-transform: uppercase;
 }
 .book {
   border-bottom: 0.1px #aaa solid;
@@ -130,6 +132,19 @@
   position: static;
   padding: 10px;
   font-size: 13pt;
+}
+.buttons {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+}
+button {
+  background: transparent;
+  color: #fff;
+  font-size: 10pt;
+  border: 0;
+  outline: 0px;
+  font-family: 'Crimson Text', 'sans-serif';
 }
 
 ::-webkit-input-placeholder {
