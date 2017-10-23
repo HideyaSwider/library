@@ -34,10 +34,21 @@ class App extends Component {
     this.setState({ bookPreview: true, book: book })
   }
 
+  addOrRemoveFromReadingList = (i) => {
+
+    let newList = this.state.list;
+    newList[i].inReadingList = newList[i].inReadingList ? !newList[i].inReadingList : true;
+    this.setState({list: newList})
+    if(this.state.bookPreview && this.state.book.index === i) {
+      this.setState({book: newList[i]})
+    }
+  }
+
   render() {
     const { list, bookPreview, book } = this.state
-    let books = list.map(book => {
-      return <Book {...book} key={book.key} onClick={this.handleBookPreview} />
+    let books = list.map((book, i) => {
+      book.index = i
+      return <Book {...book} key={book.key} onClick={this.handleBookPreview} addOrRemoveFromReadingList={this.addOrRemoveFromReadingList} />
     })
     return (
       <div className="app">
@@ -58,7 +69,7 @@ class App extends Component {
             {books}
           </div>
         ) : null}
-        {bookPreview ? <BookPreview {...book} /> : null}
+        {bookPreview ? <BookPreview {...book} addOrRemoveFromReadingList={this.addOrRemoveFromReadingList}/> : null}
       </div>
     )
   }
