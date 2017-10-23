@@ -17,7 +17,7 @@ export class Book extends Component {
     const { title, author_name } = this.props
     const { mouseIn } = this.state
     return (
-      <div className="book" onMouseEnter={this.handleMouseEnter} onMouseLeave={this.handleMouseLeave}>
+      <div className="book" onClick={() => this.props.onClick(this.props)} onMouseEnter={this.handleMouseEnter} onMouseLeave={this.handleMouseLeave}>
         <div className="book-row">
           <p className="book-label">title</p>
           <p className="book-value">{title}</p>

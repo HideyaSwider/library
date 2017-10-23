@@ -1,12 +1,15 @@
 import React, { Component } from 'react'
 import { Book } from './Book'
+import { BookPreview } from './BookPreview'
 import './App.css'
-const LIMIT = 6
+const LIMIT = 9
 
 class App extends Component {
   state = {
     search: 'lord of the rings',
-    list: []
+    list: [],
+    book: {},
+    bookPreview: false
   }
 
   handleInputChange = ({ target }) => {
@@ -22,15 +25,19 @@ class App extends Component {
       fetch(`http://openlibrary.org/search.json?q=${this.state.search.replace(/ /g, '+')}&limit=${LIMIT}`)
         .then(resp => resp.json())
         .then(json => {
-          this.setState({ list: json.docs })
+          this.setState({ list: json.docs, bookPreview: false, book: {} })
         })
     }
   }
 
+  handleBookPreview = book => {
+    this.setState({ bookPreview: true, book: book })
+  }
+
   render() {
-    const { list } = this.state
+    const { list, bookPreview, book } = this.state
     let books = list.map(book => {
-      return <Book {...book} key={book.key} />
+      return <Book {...book} key={book.key} onClick={this.handleBookPreview} />
     })
     return (
       <div className="app">
@@ -43,7 +50,7 @@ class App extends Component {
           onChange={this.handleInputChange}
           placeholder="Search books..."
         />
-        {list.length > 0 ? (
+        {list.length > 0 && !bookPreview ? (
           <div className="books">
             <div className="seach-results">
               <p>SEARCH RESULTS</p>
@@ -51,6 +58,7 @@ class App extends Component {
             {books}
           </div>
         ) : null}
+        {bookPreview ? <BookPreview {...book} /> : null}
       </div>
     )
   }
