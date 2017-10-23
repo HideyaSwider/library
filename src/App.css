@@ -1,0 +1,16 @@
+.app {
+  text-align: center;
+  background-image: url('/library.jpg');
+  background-size: cover;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex: 1;
+  font-family: 'Crimson Text', 'sans-serif';
+  justify-content: center;
+  align-items: center;
+}
+p {
+  color: white;
+  font-size: 20pt;
+}
