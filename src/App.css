@@ -70,7 +70,8 @@
 .book-value {
   color: #aaa;
 }
-.book:hover {
+.book-parent:hover {
+  position: relative;
   background-color: #000;
 }
 .add-to-list {

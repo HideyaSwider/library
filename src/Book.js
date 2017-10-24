@@ -17,7 +17,7 @@ export class Book extends Component {
     const { title, author_name, inReadingList, addOrRemoveFromReadingList, index } = this.props
     const { mouseIn } = this.state
     return (
-      <div style={{ position: 'relative' }} onMouseEnter={this.handleMouseEnter} onMouseLeave={this.handleMouseLeave}>
+      <div className="book-parent" onMouseEnter={this.handleMouseEnter} onMouseLeave={this.handleMouseLeave}>
         <div className="book" onClick={() => this.props.onClick(this.props)}>
           <div className="book-row">
             <p className="book-label">title</p>
